@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>N샵리뷰 엑셀다운</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>
+        $(function(){
+            let link = `javascript:if(void 0===url2obj)function url2obj(e){for(var t={},n=(e=e||window.location.href).slice(e.indexOf("?")+1).split("&"),o=0;o<n.length;o++){let e=n[o].split("=");t[e[0]]=e[1]}return t}{let e=location.href,t=url2obj(decodeURI(e));t.NaPm=decodeURIComponent(t.NaPm),t.url=""+$("#text1").val();let n=$("#_review_paging a:last()").attr("onclick").match(/\\d+/);var lastPageNum=Number(n[0]),getDataNum=1,rs=[];if(rs.push(["brand","id","date"]),console.log(lastPageNum),lastPageNum>=1){if(void 0===restartFun){function restartFun(){setTimeout(function(){$("#_review_list > li").each(function(e,t){let n=$(t).find("div.avg_area > span "),o=[n.find(":nth-child(1)").html(),n.find(":nth-child(2)").html(),n.find(":nth-child(3)").html()];console.log(getDataNum,o),rs.push(o)}),++getDataNum<=lastPageNum?(shop.detail.ReviewHandler.page(getDataNum,"_review_paging"),restartFun()):overFun()},250)}function overFun(){console.log(rs,getDataNum),$.getScript("https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.core.min.js",function(){let e=$(".h_area h2").text().trim();exportExcel(rs,e)})}}restartFun()}}if(void 0===exportExcel){function exportExcel(e,t="naver"){var n=e;openDownloadDialog(sheet2blob(XLSX.utils.aoa_to_sheet(n)),t+".xlsx")}function sheet2blob(e,t){var n={SheetNames:[t=t||"sheet1"],Sheets:{}};n.Sheets[t]=e;var o=XLSX.write(n,{bookType:"xlsx",bookSST:!1,type:"binary"});return new Blob([function(e){for(var t=new ArrayBuffer(e.length),n=new Uint8Array(t),o=0;o!=e.length;++o)n[o]=255&e.charCodeAt(o);return t}(o)],{type:"application/octet-stream"})}function openDownloadDialog(e,t){"object"==typeof e&&e instanceof Blob&&(e=URL.createObjectURL(e));var n,o=document.createElement("a");o.href=e,o.download=t||"",window.MouseEvent?n=new MouseEvent("click"):(n=document.createEvent("MouseEvents")).initMouseEvent("click",!0,!1,window,0,0,0,0,0,!1,!1,!1,!1,0,null),o.dispatchEvent(n)}}`;
+                        //javascript:if(void 0===url2obj)function url2obj(e){for(var t={},n=(e=e||window.location.href).slice(e.indexOf("?")+1).split("&"),o=0;o<n.length;o++){let e=n[o].split("=");t[e[0]]=e[1]}return t}{let e=location.href,t=url2obj(decodeURI(e));t.NaPm=decodeURIComponent(t.NaPm),t.url=""+$("#text1").val();let n=$("#_review_paging a:last()").attr("onclick").match(/d+/);var lastPageNum=Number(n[0]),getDataNum=1,rs=[];if(rs.push(["brand","id","date"]),console.log(lastPageNum),lastPageNum>=1){if(void 0===restartFun){function restartFun(){setTimeout(function(){$("#_review_list > li").each(function(e,t){let n=$(t).find("div.avg_area > span "),o=[n.find(":nth-child(1)").html(),n.find(":nth-child(2)").html(),n.find(":nth-child(3)").html()];console.log(getDataNum,o),rs.push(o)}),++getDataNum<=lastPageNum?(shop.detail.ReviewHandler.page(getDataNum,"_review_paging"),restartFun()):overFun()},250)}function overFun(){console.log(rs,getDataNum),$.getScript("https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.core.min.js",function(){let e=$(".h_area h2").text().trim();exportExcel(rs,e)})}}restartFun()}}if(void 0===exportExcel){function exportExcel(e,t="naver"){var n=e;openDownloadDialog(sheet2blob(XLSX.utils.aoa_to_sheet(n)),t+".xlsx")}function sheet2blob(e,t){var n={SheetNames:[t=t||"sheet1"],Sheets:{}};n.Sheets[t]=e;var o=XLSX.write(n,{bookType:"xlsx",bookSST:!1,type:"binary"});return new Blob([function(e){for(var t=new ArrayBuffer(e.length),n=new Uint8Array(t),o=0;o!=e.length;++o)n[o]=255&e.charCodeAt(o);return t}(o)],{type:"application/octet-stream"})}function openDownloadDialog(e,t){"object"==typeof e&&e instanceof Blob&&(e=URL.createObjectURL(e));var n,o=document.createElement("a");o.href=e,o.download=t||"",window.MouseEvent?n=new MouseEvent("click"):(n=document.createEvent("MouseEvents")).initMouseEvent("click",!0,!1,window,0,0,0,0,0,!1,!1,!1,!1,0,null),o.dispatchEvent(n)}}
+                        //注意，重要修改： 修改这正则部分 杠转为 \\ 
+
+            //$('#resultBox').html('<a href="'+ encodeURI(link) +'">N샵리뷰 엑셀다운</a>') //不能用这种方式添加a标签
+            function aTag(id, link, text){
+                var newLink = document.createElement("a");
+                newLink.setAttribute("href", link);
+                newText = document.createTextNode(text);
+                newLink.appendChild(newText);
+                document.getElementById(id).appendChild(newLink);
+            }
+            aTag('resultBox', link, 'N샵리뷰 엑셀다운')
+
+        })
+
+
+
+
+
+
+        
+/* ----------원소스부분
+
+if(typeof url2obj == 'undefined' ){
+    function url2obj(url) {    //URL param value
+        url = url || window.location.href;
+        var rs = {};
+        var hashes = url.slice(url.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++){
+            let hash = hashes[i].split('=');
+            rs[hash[0]] = hash[1];
+        }
+        return rs;
+    }
+
+}
+
+{
+    let url = location.href;
+    let urlParam = url2obj( decodeURI( url ) )
+    urlParam.NaPm = decodeURIComponent(urlParam.NaPm);
+    urlParam.url = ''+ $('#text1').val() ;
+    // console.log(urlParam);
+
+    let lastPageInfo =  $('#_review_paging a:last()').attr('onclick').match(/\d+/);
+    var lastPageNum = Number(lastPageInfo[0]);
+    var getDataNum = 1;
+    // console.log(lastPageInfo[0], lastPageInfo.input)
+    var rs = [];
+    rs.push(['brand','id','date']);
+    console.log(lastPageNum)
+
+
+
+    if(lastPageNum >= 1){
+        if(typeof restartFun == 'undefined' ){
+            function restartFun(){
+                setTimeout(function(){
+
+                    $('#_review_list > li').each(function(i, v){
+                        let range1 = $(v).find('div.avg_area > span ');
+                        let info = [
+                            range1.find(':nth-child(1)').html(),
+                            range1.find(':nth-child(2)').html(),
+                            range1.find(':nth-child(3)').html()
+                        ]
+                        console.log(getDataNum,info)
+                        rs.push(info)
+                    })
+                    ++getDataNum;
+                    if( getDataNum <= lastPageNum){
+                        shop.detail.ReviewHandler.page(getDataNum, '_review_paging'); 
+                        restartFun();
+                    } 
+                    else overFun();
+                }, 250 );
+            }
+
+            
+            function overFun(){
+                console.log(rs, getDataNum);
+                //save excel 
+                $.getScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.core.min.js', function(){
+                    let title = $('.h_area h2').text().trim();
+                    exportExcel(rs, title);
+                });
+            };
+
+        }
+
+        restartFun();
+
+    }
+
+}
+
+
+            //-------excel
+            if(typeof exportExcel == 'undefined' ){
+                function exportExcel(arr2, filename='naver') {
+                    var aoa = arr2;
+                    var sheet = XLSX.utils.aoa_to_sheet(aoa);
+                    openDownloadDialog(sheet2blob(sheet), filename +'.xlsx');
+                }
+
+
+                function sheet2blob(sheet, sheetName) {
+                    sheetName = sheetName || 'sheet1';
+                    var workbook = {
+                        SheetNames: [sheetName],
+                        Sheets: {}
+                    };
+                    workbook.Sheets[sheetName] = sheet;
+                    var wopts = {
+                        bookType: 'xlsx',
+                        bookSST: false, 
+                        type: 'binary'
+                    };
+                    var wbout = XLSX.write(workbook, wopts);
+                    var blob = new Blob([s2ab(wbout)], {type:"application/octet-stream"});
+                    function s2ab(s) {
+                        var buf = new ArrayBuffer(s.length);
+                        var view = new Uint8Array(buf);
+                        for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+                        return buf;
+                    }
+                    return blob;
+                }
+
+                function openDownloadDialog(url, saveName){
+                    if(typeof url == 'object' && url instanceof Blob){
+                        url = URL.createObjectURL(url);
+                    }
+                    var aLink = document.createElement('a');
+                    aLink.href = url;
+                    aLink.download = saveName || '';
+                    var event;
+                    if(window.MouseEvent) event = new MouseEvent('click');
+                    else {
+                        event = document.createEvent('MouseEvents');
+                        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                    }
+                    aLink.dispatchEvent(event);
+                }
+
+            }
+            //-----------//excel
+
+*/
+    </script>
+
+</head>
+<body>
+    <h3>네이버 쇼핑 스마트 리뷰를 엑셀로 출력</h3>
+    <pre>
+    1.아래 링크를 드래그해서 북마크에 넣으세요.
+    2.네이버 쇼핑에서 찾으려 상품 페이지를 켠후 (최저가페이지로 된 상품페이지만 사용가능합니다.) 
+    3.북마크에 저장한 [N샵리뷰 엑셀다운]을 클릭하면 자동 엑셀이 생성됩니다.
+    </pre>
+    <div id="resultBox"></div>
+</body>
+</html>
